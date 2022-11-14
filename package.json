@@ -1,0 +1,22 @@
+{
+  "name": "Chatts",
+  "version": "0.5",
+  "main": "app.js",
+  "license": "ISC",
+  "scripts": {
+    "start": "nodemon app",
+    "test": "jest"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "express-async-errors": "^3.1.1",
+    "helmet": "^6.0.0",
+    "nodemon": "^2.0.20",
+    "socket.io": "^4.5.3"
+  },
+  "devDependencies": {
+    "jest": "^29.3.1",
+    "socket.io-client": "^4.5.3"
+  }
+}
