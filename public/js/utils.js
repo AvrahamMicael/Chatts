@@ -5,10 +5,12 @@ export const htmlToElement = html => {
 };
 
 export const genMessageDiv = ({ username, message, time }, currentUser) => htmlToElement(`
-  <div class="bg-light text-${ username == currentUser ? 'end' : 'start' }">
-    <small>${ username }</small>
-    <span>${ message }</span>
-    <small>${ moment(time).format('hh:mm a') }</small>
+  <div class="m-2 text-${ username == currentUser ? 'end' : 'start' }">
+    <span class="d-inline-block p-1 bg-light border rounded">
+      <strong class="d-block small text-decoration-underline">${ username }</strong>
+      <span>${ message }</span>
+      <small class="d-block link-secondary small">${ moment(time).format('hh:mm a') }</small>
+    </span>
   </div>
 `);
 
