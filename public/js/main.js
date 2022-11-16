@@ -1,3 +1,5 @@
+import { genMessageDiv, getInputsDataFromForm, scrollDown, htmlToElement } from "./utils.js";
+
 const socket = io();
 
 const enterForm = document.getElementById('enterForm');
@@ -16,7 +18,8 @@ const onSubmitEnterForm = ev => {
 
 const onSubmitMessageForm = ev => {
   ev.preventDefault();
-  socket.emit('sendMessage', messageInput.value);
+  if(!messageInput.value) return;
+  socket.emit('sendMessage', messageInput.value.trim());
   messageInput.value = '';
 };
 

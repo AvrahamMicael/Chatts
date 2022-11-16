@@ -1,3 +1,4 @@
+const { expectCt } = require("helmet");
 const { createServer } = require("http");
 const { Server } = require("socket.io");
 const Client = require("socket.io-client");
@@ -27,7 +28,12 @@ describe("SendMessage client event", () => {
   test("Messages Array added the new message", done => {
     serverSocket.on('sendMessage', message => {
       require('../sendMessage')(serverSocket, io)(message);
-      expect(messages[serverSocket.roomCode]).toContainEqual({ username: 'testUser', message: 'a random message' });
+
+      const sentMessage =  messages[serverSocket.roomCode][0];
+      expect(sentMessage).toHaveProperty('username', 'testUser');
+      expect(sentMessage).toHaveProperty('message', 'a random message');
+      expect(sentMessage).toHaveProperty('time');
+
       done();
     });
 

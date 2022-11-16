@@ -2,13 +2,12 @@ module.exports = {
   rooms: {},
   messages: {},
   io: server => {
-    const { Server } = require('socket.io');
-    const io = new Server(server);
+    const io = new (require('socket.io').Server)(server);
     
     io.on('connection', socket => {
       console.log('a user connected');
-      socket.on('enterRoom', require('./enterRoom')(socket));
-      socket.on('sendMessage', require('./sendMessage')(socket, io));
+      socket.on('enterRoom', require('./enterRoom')(socket, io));
+      socket.on('sendMessage', require('./sendMessage')(socket));
     });
   },
 };

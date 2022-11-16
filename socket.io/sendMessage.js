@@ -1,7 +1,7 @@
 const { messages } = require(".");
 
-module.exports = (socket, io) => message => {
-  const messageObj = { message, username: socket.username };
+module.exports = socket => message => {
+  const messageObj = { message, username: socket.username, time: new Date().toISOString() };
   messages[socket.roomCode].push(messageObj);
-  io.in(socket.roomCode).emit('newMessage', messageObj);
+  socket.roomEmit('newMessage', messageObj);
 };

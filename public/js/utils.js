@@ -1,20 +1,20 @@
-const htmlToElement = html => {
+export const htmlToElement = html => {
   const template = document.createElement('template');
-  html = html.trim();
-  template.innerHTML = html;
+  template.innerHTML = html.trim();
   return template.content.firstChild;
 };
 
-const genMessageDiv = ({ username, message }, currentUser) => htmlToElement(`
-  <div class="bg-light text-${ username == currentUser ? 'start' : 'end' }">
+export const genMessageDiv = ({ username, message, time }, currentUser) => htmlToElement(`
+  <div class="bg-light text-${ username == currentUser ? 'end' : 'start' }">
     <small>${ username }</small>
-    <p>${ message }</p>
+    <span>${ message }</span>
+    <small>${ moment(time).format('hh:mm a') }</small>
   </div>
 `);
 
-const getInputsDataFromForm = formElement => [ ...(new FormData(formElement)).entries() ].reduce((prev, [ key, value ]) => ({
+export const getInputsDataFromForm = formElement => [ ...(new FormData(formElement)).entries() ].reduce((prev, [ key, value ]) => ({
   ...prev,
   [key]: value.trim(),
 }), {});
 
-const scrollDown = () => window.scrollTo(0, document.body.scrollHeight);
+export const scrollDown = () => window.scrollTo(0, document.body.scrollHeight);
