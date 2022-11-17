@@ -8,6 +8,7 @@ module.exports = {
       console.log('an user connected');
       socket.on('enterRoom', require('./enterRoom')(socket, io));
       socket.on('sendMessage', require('./sendMessage')(socket));
+      socket.on('disconnect', require('./disconnect')(socket));
     });
   },
 };

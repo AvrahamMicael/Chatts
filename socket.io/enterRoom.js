@@ -15,9 +15,6 @@ module.exports = (socket, io) => ({ username, roomCode }) => {
 
   require('../utils/attachDataToSocket')(socket, io, cleanUsername, roomCode);
 
-  const connectionMessage = socket.genConnectionMessage();
-  roomMessages.push(connectionMessage);
-  socket.roomEmit('connectionNotification', connectionMessage);
-
+  socket.emitConnectionMessage();
   return socket.emit('connectRoom', roomMessages, cleanUsername);
 };
