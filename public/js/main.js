@@ -1,4 +1,4 @@
-import { genMessageDiv, getInputsDataFromForm, scrollDown, htmlToElement } from "./utils.js";
+import { genMessageDiv, getInputsDataFromForm, scrollDown, htmlToElement, genConnectionNotificationDiv } from "./utils.js";
 
 const socket = io();
 
@@ -23,7 +23,11 @@ const onSubmitMessageForm = ev => {
   messageInput.value = '';
 };
 
-const addMessage = message => messagesDiv.appendChild(genMessageDiv(message, currentUser));
+const addMessageOrNotification = message => messagesDiv.appendChild(
+    message.isConnectionMessage
+      ? genConnectionNotificationDiv(message)
+      : genMessageDiv(message, currentUser)
+  );
 
 const onConnectRoom = (messages, currentUsername) => {
   enterPopup.remove();
@@ -41,7 +45,7 @@ const onConnectRoom = (messages, currentUsername) => {
   mainTag.appendChild(roomDisplay);
 
   messagesDiv = document.getElementById('messagesDiv');
-  messages.forEach(addMessage);
+  messages.forEach(addMessageOrNotification);
 
   messageInput = document.getElementById('messageInput');
 
@@ -53,13 +57,15 @@ const onConnectRoom = (messages, currentUsername) => {
 
 const onSameUsernameInRoom = () => {};
 
-const handleNewMessage = message => {
-  addMessage(message);
-  window.scrollTo(0, document.body.scrollHeight);
+const handleMessageOrNotification = message => {
+  if(!messagesDiv) return;
+  addMessageOrNotification(message);
+  scrollDown();
 };
 
 enterForm.addEventListener('submit', onSubmitEnterForm);
 
 socket.on('connectRoom', onConnectRoom);
 socket.on('sameUsernameInRoom', onSameUsernameInRoom);
-socket.on('newMessage', handleNewMessage);
+socket.on('newMessage', handleMessageOrNotification);
+socket.on('connectionNotification', handleMessageOrNotification);

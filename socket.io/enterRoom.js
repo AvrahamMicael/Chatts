@@ -1,15 +1,23 @@
 const { rooms, messages } = require(".");
+const sanitizeString = require("../utils/sanitizeString");
 
 module.exports = (socket, io) => ({ username, roomCode }) => {
+  const cleanUsername = sanitizeString(username);
+
+  if(!cleanUsername) return socket.emit('invalidName');
+
   const room = rooms[roomCode] = rooms[roomCode] ?? [];
-  if(room.indexOf(username) != -1) return socket.emit('sameUsernameInRoom');
-  room.push(username);
+  if(room.indexOf(cleanUsername) != -1) return socket.emit('sameUsernameInRoom');
+  room.push(cleanUsername);
   const roomMessages = messages[roomCode] = messages[roomCode] ?? [];
 
   socket.join(roomCode);
-  socket.roomCode = roomCode;
-  socket.username = username;
-  socket.roomEmit = (eventName, ...args) => io.in(roomCode).emit(eventName, ...args);
 
-  return socket.emit('connectRoom', roomMessages, username);
+  require('../utils/attachDataToSocket')(socket, io, cleanUsername, roomCode);
+
+  const connectionMessage = socket.genConnectionMessage();
+  roomMessages.push(connectionMessage);
+  socket.roomEmit('connectionNotification', connectionMessage);
+
+  return socket.emit('connectRoom', roomMessages, cleanUsername);
 };
