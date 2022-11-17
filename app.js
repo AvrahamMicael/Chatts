@@ -2,8 +2,7 @@ require('express-async-errors');
 const express = require('express');
 const app = express();
 
-require('./security')(app);
-
+require('./middlewares')(app);
 require('./routes')(app, express);
 
 const server = require('http').createServer(app);
