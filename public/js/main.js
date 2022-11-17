@@ -6,6 +6,8 @@ const enterForm = document.getElementById('enterForm');
 const enterButton = document.getElementById('enterButton');
 const enterPopup = document.getElementById('enterPopup');
 const mainTag = document.getElementsByTagName('main')[0];
+const invalidUsernameFeedbackDiv = document.getElementById('invalidUsernameFeedbackDiv');
+const usernameInput = document.getElementById('usernameInput');
 
 let messagesDiv, currentUser, messageInput;
 
@@ -55,17 +57,22 @@ const onConnectRoom = (messages, currentUsername) => {
   scrollDown();
 };
 
-const onSameUsernameInRoom = () => {};
-
 const handleMessageOrNotification = message => {
   if(!messagesDiv) return;
   addMessageOrNotification(message);
   scrollDown();
 };
 
+const showValidationFeedBackAndReactivateBtn = feedback => {
+  invalidUsernameFeedbackDiv.textContent = feedback;
+  usernameInput.classList.add('is-invalid');
+  enterButton.disabled = false;
+};
+
 enterForm.addEventListener('submit', onSubmitEnterForm);
 
 socket.on('connectRoom', onConnectRoom);
-socket.on('sameUsernameInRoom', onSameUsernameInRoom);
 socket.on('newMessage', handleMessageOrNotification);
 socket.on('connectionNotification', handleMessageOrNotification);
+socket.on('invalidUsername', () => showValidationFeedBackAndReactivateBtn('Please, provide an username'));
+socket.on('sameUsernameInRoom', () => showValidationFeedBackAndReactivateBtn('Someone is already using this username in this room'));

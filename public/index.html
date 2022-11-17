@@ -22,12 +22,14 @@
         <div class="text-center mb-2">
           <span class="brand text-uppercase border-bottom border-3 border-secondary">Chatts</span>
         </div>
-        <form id="enterForm">
+        <form id="enterForm" novalidate>
           <label for="usernameInput" class="form-label">Username:</label>
-          <input type="text" name="username" class="form-control mb-1">
-          <label for="roomCode">Room Code:</label>
+          <input type="text" name="username" class="form-control mb-1" required autocomplete="off" id="usernameInput">
+          <div class="invalid-feedback" id="invalidUsernameFeedbackDiv">Please, provide an username</div>
+
+          <label for="roomCodeInput">Room Code:</label>
           <div class="input-group mb-3">
-            <input type="text" name="roomCode" class="form-control">
+            <input type="text" name="roomCode" class="form-control" autocomplete="off" id="roomCodeInput">
             <button type="button" class="btn btn-info text-white" title="If you want to create a new room, just write a random word">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info-circle" viewBox="0 0 16 16">
                 <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>

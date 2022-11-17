@@ -4,7 +4,7 @@ const sanitizeString = require("../utils/sanitizeString");
 module.exports = (socket, io) => ({ username, roomCode }) => {
   const cleanUsername = sanitizeString(username);
 
-  if(!cleanUsername) return socket.emit('invalidName');
+  if(!cleanUsername) return socket.emit('invalidUsername');
 
   const room = rooms[roomCode] = rooms[roomCode] ?? [];
   if(room.indexOf(cleanUsername) != -1) return socket.emit('sameUsernameInRoom');
