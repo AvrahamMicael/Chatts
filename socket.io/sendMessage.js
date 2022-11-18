@@ -1,12 +1,11 @@
 const { messages } = require(".");
+const createMessageObj = require("../utils/createMessageObj");
 const sanitizeString = require("../utils/sanitizeString");
 
-module.exports = socket => message => {
-  const messageObj = {
-    message: sanitizeString(message) || `<mark>This message couldn't be sent</mark>`,
-    username: socket.username,
-    time: new Date().toISOString(),
-  };
+module.exports = socket => userMessage => {
+  const message = sanitizeString(userMessage);
+  if(!message) return;
+  const messageObj = createMessageObj(socket.username, message);
   messages[socket.roomCode].push(messageObj);
   return socket.roomEmitAll('newMessage', messageObj);
 };
