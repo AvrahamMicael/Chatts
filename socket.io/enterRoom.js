@@ -1,5 +1,6 @@
 const { rooms, messages } = require(".");
 const sanitizeString = require("../utils/sanitizeString");
+const attachDataToSocket = require('../utils/attachDataToSocket');
 
 module.exports = (socket, io) => ({ username, roomCode }) => {
   const cleanUsername = sanitizeString(username);
@@ -13,7 +14,7 @@ module.exports = (socket, io) => ({ username, roomCode }) => {
 
   socket.join(roomCode);
 
-  require('../utils/attachDataToSocket')(socket, io, cleanUsername, roomCode);
+  attachDataToSocket(socket, io, cleanUsername, roomCode);
 
   socket.emitConnectionMessage();
   return socket.emit('connectRoom', roomMessages, cleanUsername);
