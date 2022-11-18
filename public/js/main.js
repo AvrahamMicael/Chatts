@@ -74,5 +74,4 @@ enterForm.addEventListener('submit', onSubmitEnterForm);
 socket.on('connectRoom', onConnectRoom);
 socket.on('newMessage', handleMessageOrNotification);
 socket.on('connectionNotification', handleMessageOrNotification);
-socket.on('invalidUsername', () => showValidationFeedBackAndReactivateBtn('Please, provide an username'));
-socket.on('sameUsernameInRoom', () => showValidationFeedBackAndReactivateBtn('Someone is already using this username in this room'));
+socket.on('invalidUsername', showValidationFeedBackAndReactivateBtn);

@@ -42,3 +42,8 @@
 
     overflow: auto;
 }
+
+#usernameInput:invalid
+{
+  background-color: rgba(255, 0, 0, .5);
+}
