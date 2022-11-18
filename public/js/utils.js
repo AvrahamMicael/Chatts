@@ -12,7 +12,7 @@ export const genMessageDiv = ({ username, message, time }, currentUser) => {
     <div class="m-2 ${ isSameUsername ? 'ms-5' : 'me-5' } text-${ isSameUsername ? 'end' : 'start' }">
       <span class="d-inline-block p-2 bg-light border rounded">
         <strong class="d-block small text-decoration-underline text-start">${ username }</strong>
-        <span class="d-block text-start">${ message }</span>
+        <span class="d-block text-start text-break">${ message }</span>
         <time class="d-block link-secondary small text-end">${ formatTime(time) }</time>
       </span>
     </div>
