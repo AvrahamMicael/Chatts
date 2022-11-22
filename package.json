@@ -4,10 +4,11 @@
   "main": "app.js",
   "license": "ISC",
   "scripts": {
-    "start": "nodemon app",
+    "start": "node app",
+    "dev": "nodemon app",
     "test": "jest",
-    "babel:public": "babel ./public -d ./public/dist --copy-files --delete-dir-on-start",
-    "babel-watch:public": "babel ./public/js -d ./public/dist/js -w --copy-files --delete-dir-on-start"
+    "babel:public": "babel ./public -d ./dist --copy-files --delete-dir-on-start",
+    "babel-watch:public": "babel ./public -d ./dist -w --copy-files --delete-dir-on-start"
   },
   "dependencies": {
     "compression": "^1.7.4",
