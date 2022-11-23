@@ -22,6 +22,7 @@
     "socket.io": "^4.5.3"
   },
   "devDependencies": {
+    "@babel/cli": "^7.19.3",
     "@babel/core": "^7.20.2",
     "@babel/preset-env": "^7.20.2",
     "dotenv": "^16.0.3",
